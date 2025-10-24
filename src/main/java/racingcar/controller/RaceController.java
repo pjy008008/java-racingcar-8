@@ -1,0 +1,56 @@
+package racingcar.controller;
+
+import racingcar.domain.Car;
+import racingcar.domain.Cars;
+import racingcar.domain.Race;
+import racingcar.ui.InputView;
+import racingcar.ui.OutputView;
+import racingcar.util.InputParser;
+import racingcar.validation.InputValidator;
+
+import java.util.List;
+
+public class RaceController {
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final InputValidator inputValidator;
+    private final InputParser inputParser;
+
+    public RaceController(InputView inputView, OutputView outputView, InputValidator inputValidator, InputParser inputParser) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.inputValidator = inputValidator;
+        this.inputParser = inputParser;
+    }
+
+    public void start() {
+        List<String> carNames = getCarNames();
+        int attempt = getAttempt();
+
+        List<Car> carList = carNames.stream()
+                .map(Car::new)
+                .toList();
+
+        Cars cars = new Cars(carList);
+
+        outputView.printStartMessage();
+        Race race = new Race(cars, attempt, outputView);
+
+        Cars winner = race.run();
+
+        outputView.printWinners(winner);
+    }
+
+    private List<String> getCarNames() {
+        String carNames = inputView.readCarNames();
+        List<String> parsedCarNames = inputParser.parse(carNames);
+        inputValidator.validateCarName(parsedCarNames);
+        return parsedCarNames;
+    }
+
+    private int getAttempt() {
+        String attempt = inputView.readAttempt();
+        inputValidator.validateAttempt(attempt);
+        return Integer.parseInt(attempt);
+    }
+}

@@ -26,15 +26,17 @@ public class RaceController {
         int attempt = raceSetupService.getValidAttempt();
 
         Race race = new Race(cars, moveStrategy);
-
-        outputView.printStartMessage();
-        for (int i = 0; i < attempt; i++) {
-            race.runOneRound();
-            outputView.printCarsAndPositions(race.getCars());
-        }
+        runRace(race, attempt);
 
         Cars winner = race.getWinner();
         outputView.printWinners(winner);
     }
 
+    private void runRace(Race race, int attempt) {
+        outputView.printStartMessage();
+        for (int i = 0; i < attempt; i++) {
+            race.runOneRound();
+            outputView.printCarsAndPositions(race.getCars());
+        }
+    }
 }

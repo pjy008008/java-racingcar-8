@@ -7,6 +7,8 @@ import racingcar.service.RaceSetupService;
 import racingcar.ui.InputView;
 import racingcar.ui.OutputView;
 import racingcar.util.InputParser;
+import racingcar.validation.AttemptValidator;
+import racingcar.validation.CarNameValidator;
 import racingcar.validation.InputValidator;
 
 public class AppConfig {
@@ -19,8 +21,16 @@ public class AppConfig {
         return new OutputView();
     }
 
+    public CarNameValidator carNameValidator() {
+        return new CarNameValidator();
+    }
+
+    public AttemptValidator attemptValidator() {
+        return new AttemptValidator();
+    }
+
     public InputValidator inputValidator() {
-        return new InputValidator();
+        return new InputValidator(carNameValidator(), attemptValidator());
     }
 
     public InputParser inputParser() {

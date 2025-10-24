@@ -1,19 +1,21 @@
 package racingcar.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.domain.strategy.MoveStrategy;
 
 import java.util.List;
 
 public class Race {
     private final Cars cars;
+    private final MoveStrategy moveStrategy;
 
-    public Race(Cars cars) {
+    public Race(Cars cars, MoveStrategy moveStrategy) {
         this.cars = cars;
+        this.moveStrategy = moveStrategy;
     }
 
     public void runOneRound() {
         for (Car car : cars.getCarList()) {
-            if (Randoms.pickNumberInRange(0, 9) >= 4) {
+            if (moveStrategy.canMove()) {
                 car.move();
             }
         }

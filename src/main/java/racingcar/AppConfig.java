@@ -1,6 +1,8 @@
 package racingcar;
 
 import racingcar.controller.RaceController;
+import racingcar.domain.strategy.MoveStrategy;
+import racingcar.domain.strategy.RandomMoveStrategy;
 import racingcar.ui.InputView;
 import racingcar.ui.OutputView;
 import racingcar.util.InputParser;
@@ -24,8 +26,17 @@ public class AppConfig {
         return new InputParser();
     }
 
+    public MoveStrategy moveStrategy() {
+        return new RandomMoveStrategy();
+    }
+
     public RaceController raceController() {
-        return new RaceController(inputView(), outputView(), inputValidator(), inputParser());
+        return new RaceController(
+                inputView(),
+                outputView(),
+                inputValidator(),
+                inputParser(),
+                moveStrategy());
     }
 
 }

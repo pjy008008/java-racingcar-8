@@ -3,6 +3,7 @@ package racingcar.controller;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Race;
+import racingcar.domain.strategy.MoveStrategy;
 import racingcar.ui.InputView;
 import racingcar.ui.OutputView;
 import racingcar.util.InputParser;
@@ -15,12 +16,19 @@ public class RaceController {
     private final OutputView outputView;
     private final InputValidator inputValidator;
     private final InputParser inputParser;
+    private final MoveStrategy moveStrategy;
 
-    public RaceController(InputView inputView, OutputView outputView, InputValidator inputValidator, InputParser inputParser) {
+    public RaceController(
+            InputView inputView,
+            OutputView outputView,
+            InputValidator inputValidator,
+            InputParser inputParser,
+            MoveStrategy moveStrategy) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.inputValidator = inputValidator;
         this.inputParser = inputParser;
+        this.moveStrategy = moveStrategy;
     }
 
     public void start() {
@@ -33,7 +41,7 @@ public class RaceController {
 
         Cars cars = new Cars(carList);
 
-        Race race = new Race(cars);
+        Race race = new Race(cars, moveStrategy);
 
         outputView.printStartMessage();
         for (int i = 0; i < attempt; i++) {

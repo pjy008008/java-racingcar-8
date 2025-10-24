@@ -28,8 +28,7 @@ public class RaceController {
         Race race = new Race(cars, moveStrategy);
         runRace(race, attempt);
 
-        Cars winner = race.getWinner();
-        outputView.printWinners(winner);
+        announceWinner(race);
     }
 
     private void runRace(Race race, int attempt) {
@@ -38,5 +37,10 @@ public class RaceController {
             race.runOneRound();
             outputView.printCarsAndPositions(race.getCars());
         }
+    }
+
+    private void announceWinner(Race race) {
+        Cars winner = race.getWinner();
+        outputView.printWinners(winner);
     }
 }

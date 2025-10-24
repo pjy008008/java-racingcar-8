@@ -15,6 +15,7 @@ public class OutputView {
     }
 
     public void printStartMessage() {
+        System.out.println();
         System.out.println("실행 결과");
     }
 

@@ -25,10 +25,7 @@ public class Race {
         List<Car> carList = cars.getCarList();
 
         int maxPosition = getMaxPosition(carList);
-
-        List<Car> winner = carList.stream()
-                .filter(car -> car.getPosition() == maxPosition)
-                .toList();
+        List<Car> winner = findWinnerCars(carList, maxPosition);
 
         return new Cars(winner);
     }
@@ -38,6 +35,12 @@ public class Race {
                 .mapToInt(Car::getPosition)
                 .max()
                 .orElse(0);
+    }
+
+    private static List<Car> findWinnerCars(List<Car> carList, int maxPosition) {
+        return carList.stream()
+                .filter(car -> car.getPosition() == maxPosition)
+                .toList();
     }
 
     public Cars getCars() {

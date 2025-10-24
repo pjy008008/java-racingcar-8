@@ -1,31 +1,17 @@
 package racingcar.domain;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import racingcar.ui.OutputView;
 
 import java.util.List;
 
 public class Race {
     private final Cars cars;
-    private final int attempt;
-    private final OutputView outputView;
 
-    public Race(Cars cars, int attempt, OutputView outputView) {
+    public Race(Cars cars) {
         this.cars = cars;
-        this.attempt = attempt;
-        this.outputView = outputView;
     }
 
-    public Cars run() {
-        for (int i = 0; i < attempt; i++) {
-            runOneRound(cars);
-            outputView.printCarsAndPositions(cars);
-        }
-        return getWinner(cars);
-    }
-
-
-    private void runOneRound(Cars cars) {
+    public void runOneRound() {
         for (Car car : cars.getCarList()) {
             if (Randoms.pickNumberInRange(0, 9) >= 4) {
                 car.move();
@@ -33,7 +19,7 @@ public class Race {
         }
     }
 
-    private Cars getWinner(Cars cars) {
+    public Cars getWinner() {
         List<Car> carList = cars.getCarList();
 
         int maxPosition = carList.stream()
@@ -46,5 +32,9 @@ public class Race {
                 .toList();
 
         return new Cars(winner);
+    }
+
+    public Cars getCars() {
+        return cars;
     }
 }

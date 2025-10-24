@@ -33,11 +33,15 @@ public class RaceController {
 
         Cars cars = new Cars(carList);
 
+        Race race = new Race(cars);
+
         outputView.printStartMessage();
-        Race race = new Race(cars, attempt, outputView);
+        for (int i = 0; i < attempt; i++) {
+            race.runOneRound();
+            outputView.printCarsAndPositions(race.getCars());
+        }
 
-        Cars winner = race.run();
-
+        Cars winner = race.getWinner();
         outputView.printWinners(winner);
     }
 

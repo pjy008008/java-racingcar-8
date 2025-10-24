@@ -1,45 +1,29 @@
 package racingcar.controller;
 
-import racingcar.domain.Car;
 import racingcar.domain.Cars;
 import racingcar.domain.Race;
 import racingcar.domain.strategy.MoveStrategy;
-import racingcar.ui.InputView;
+import racingcar.service.RaceSetupService;
 import racingcar.ui.OutputView;
-import racingcar.util.InputParser;
-import racingcar.validation.InputValidator;
-
-import java.util.List;
 
 public class RaceController {
-    private final InputView inputView;
+    private final RaceSetupService raceSetupService;
     private final OutputView outputView;
-    private final InputValidator inputValidator;
-    private final InputParser inputParser;
+
     private final MoveStrategy moveStrategy;
 
     public RaceController(
-            InputView inputView,
+            RaceSetupService raceSetupService,
             OutputView outputView,
-            InputValidator inputValidator,
-            InputParser inputParser,
             MoveStrategy moveStrategy) {
-        this.inputView = inputView;
+        this.raceSetupService = raceSetupService;
         this.outputView = outputView;
-        this.inputValidator = inputValidator;
-        this.inputParser = inputParser;
         this.moveStrategy = moveStrategy;
     }
 
     public void start() {
-        List<String> carNames = getCarNames();
-        int attempt = getAttempt();
-
-        List<Car> carList = carNames.stream()
-                .map(Car::new)
-                .toList();
-
-        Cars cars = new Cars(carList);
+        Cars cars = raceSetupService.getValidCars();
+        int attempt = raceSetupService.getValidAttempt();
 
         Race race = new Race(cars, moveStrategy);
 
@@ -53,16 +37,4 @@ public class RaceController {
         outputView.printWinners(winner);
     }
 
-    private List<String> getCarNames() {
-        String carNames = inputView.readCarNames();
-        List<String> parsedCarNames = inputParser.parse(carNames);
-        inputValidator.validateCarName(parsedCarNames);
-        return parsedCarNames;
-    }
-
-    private int getAttempt() {
-        String attempt = inputView.readAttempt();
-        inputValidator.validateAttempt(attempt);
-        return Integer.parseInt(attempt);
-    }
 }

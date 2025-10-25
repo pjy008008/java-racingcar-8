@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String DELIMITER = ",";
-    private static final String WINNER_MESSAGE = "\n최종 우승자 : ";
+    private static final String WINNER_MESSAGE = "최종 우승자 : ";
     private static final String START_MESSAGE = "\n실행 결과";
     private static final String NAME_POSITION_SEPARATOR = " : ";
     private static final String POSITION_MARK = "-";
@@ -37,5 +37,6 @@ public class OutputView {
             String message = car.getName() + NAME_POSITION_SEPARATOR + POSITION_MARK.repeat(position);
             outputWriter.println(message);
         }
+        outputWriter.println("");
     }
 }

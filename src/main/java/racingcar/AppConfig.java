@@ -4,6 +4,8 @@ import racingcar.controller.RaceController;
 import racingcar.domain.strategy.MoveStrategy;
 import racingcar.domain.strategy.RandomMoveStrategy;
 import racingcar.service.RaceSetupService;
+import racingcar.ui.ConsoleInputReader;
+import racingcar.ui.InputReader;
 import racingcar.ui.InputView;
 import racingcar.ui.OutputView;
 import racingcar.util.InputParser;
@@ -13,8 +15,12 @@ import racingcar.validation.InputValidator;
 
 public class AppConfig {
 
+    public InputReader inputReader() {
+        return new ConsoleInputReader();
+    }
+
     public InputView inputView() {
-        return new InputView();
+        return new InputView(inputReader());
     }
 
     public OutputView outputView() {

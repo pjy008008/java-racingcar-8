@@ -4,10 +4,12 @@ import racingcar.controller.RaceController;
 import racingcar.domain.strategy.MoveStrategy;
 import racingcar.domain.strategy.RandomMoveStrategy;
 import racingcar.service.RaceSetupService;
-import racingcar.ui.ConsoleInputReader;
-import racingcar.ui.InputReader;
+import racingcar.ui.console.ConsoleInputReader;
+import racingcar.ui.console.ConsoleOutputWriter;
+import racingcar.ui.console.InputReader;
 import racingcar.ui.InputView;
 import racingcar.ui.OutputView;
+import racingcar.ui.console.OutputWriter;
 import racingcar.util.InputParser;
 import racingcar.validation.AttemptValidator;
 import racingcar.validation.CarNameValidator;
@@ -23,8 +25,12 @@ public class AppConfig {
         return new InputView(inputReader());
     }
 
+    public OutputWriter outputWriter() {
+        return new ConsoleOutputWriter();
+    }
+
     public OutputView outputView() {
-        return new OutputView();
+        return new OutputView(outputWriter());
     }
 
     public CarNameValidator carNameValidator() {

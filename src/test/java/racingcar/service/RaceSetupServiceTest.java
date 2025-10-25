@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
-import racingcar.ui.InputReader;
+import racingcar.ui.console.InputReader;
 import racingcar.ui.InputView;
 import racingcar.util.InputParser;
 import racingcar.validation.AttemptValidator;

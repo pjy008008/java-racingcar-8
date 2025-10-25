@@ -54,7 +54,7 @@ public class AppConfig {
     }
 
     public RaceSetupService raceSetupService() {
-        return new RaceSetupService(inputView(), inputValidator(), inputParser());
+        return new RaceSetupService(inputView(), outputView(), inputValidator(), inputParser());
     }
 
     public RaceController raceController() {

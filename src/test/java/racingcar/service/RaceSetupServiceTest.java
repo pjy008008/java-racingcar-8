@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import racingcar.domain.Car;
 import racingcar.domain.Cars;
+import racingcar.ui.OutputView;
+import racingcar.ui.console.ConsoleOutputWriter;
 import racingcar.ui.console.InputReader;
 import racingcar.ui.InputView;
 import racingcar.util.InputParser;
@@ -33,11 +35,13 @@ class RaceSetupServiceTest {
 
     private final StubInputReader stubInputReader = new StubInputReader();
     private final InputView inputView = new InputView(stubInputReader);
+    private final ConsoleOutputWriter consoleOutputWriter = new ConsoleOutputWriter();
+    private final OutputView outputView = new OutputView(consoleOutputWriter);
     private final CarNameValidator carNameValidator = new CarNameValidator();
     private final AttemptValidator attemptValidator = new AttemptValidator();
     private final InputValidator inputValidator = new InputValidator(carNameValidator, attemptValidator);
     private final InputParser inputParser = new InputParser();
-    private final RaceSetupService raceSetupService = new RaceSetupService(inputView, inputValidator, inputParser);
+    private final RaceSetupService raceSetupService = new RaceSetupService(inputView, outputView, inputValidator, inputParser);
 
     @Nested
     @DisplayName("getValidCars 메서드는")

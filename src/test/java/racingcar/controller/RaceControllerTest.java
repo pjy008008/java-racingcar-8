@@ -66,7 +66,7 @@ class RaceControllerTest {
 
         InputValidator inputValidator = new InputValidator(carNameValidator, attemptValidator);
         InputParser inputParser = new InputParser();
-        RaceSetupService raceSetupService = new RaceSetupService(inputView, inputValidator, inputParser);
+        RaceSetupService raceSetupService = new RaceSetupService(inputView, outputView, inputValidator, inputParser);
         MoveStrategy moveStrategy = new AlwaysMoveStrategy();
         raceController = new RaceController(raceSetupService, outputView, moveStrategy);
     }
@@ -85,6 +85,8 @@ class RaceControllerTest {
         // then
         String output = stubOutputWriter.getOutput();
         String expectedOutput = """
+                경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)
+                시도할 횟수는 몇 회인가요?
                 
                 실행 결과
                 pobi : -
@@ -108,9 +110,6 @@ class RaceControllerTest {
         assertThatThrownBy(() -> raceController.start())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("자동차 이름이 빈칸입니다.");
-
-        String output = stubOutputWriter.getOutput();
-        assertThat(output).isEmpty();
     }
 
     @Test
@@ -124,9 +123,6 @@ class RaceControllerTest {
         assertThatThrownBy(() -> raceController.start())
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("숫자여야 합니다.");
-
-        String output = stubOutputWriter.getOutput();
-        assertThat(output).isEmpty();
     }
 }
 
